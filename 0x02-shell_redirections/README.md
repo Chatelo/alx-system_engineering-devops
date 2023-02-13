@@ -1,1 +1,1 @@
-This scripts shows how Shell does  I/O Redirections and filters
+0x02. Shell I/O Redirections and filters

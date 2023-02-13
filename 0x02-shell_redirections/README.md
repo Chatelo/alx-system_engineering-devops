@@ -1,0 +1,1 @@
+This scripts shows how Shell does  I/O Redirections and filters

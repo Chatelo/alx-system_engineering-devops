@@ -2,4 +2,4 @@
 
 # Displays its own PID.
 
-echo "PID: $$" 
+echo $$ 

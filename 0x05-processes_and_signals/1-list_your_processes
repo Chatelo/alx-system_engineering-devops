@@ -1,17 +1,6 @@
-!#/bin/env bash
-# Use the ps command to display all processes with their PID, PPID, USER, TTY, and COMMAND
-# The "aux" option shows all processes for all users, including those without a TTY
-# The output is then formatted using awk to display the required information
+#!/usr/bin/env bash
+# Displays a list of currently running processes.
+#   Shows all processes, for all users, including those
+#+  which might not have a TTY.
 
-echo "-----------------------------------------------------------------------"
-echo "  PID  |   PPID  |  USER     |  TTY       | COMMAND"
-echo "-----------------------------------------------------------------------"
-ps aux | awk '{
-    printf("%6s | %6s | %-10s | %-10s | %s", $2, $3, $1, $7, $11);
-    for (i=12; i<=NF; i++) {
-        printf(" %s", $i);
-    }
-    printf("\n");
-}'
-
-echo "-----------------------------------------------------------------------"
+ps -auxf

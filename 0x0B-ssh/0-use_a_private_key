@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# This scripts Connects to my ALX School Server
+
+# Define the server IP address
+server_ip="18.234.145.59"
+
+# Define the path to the private key
+private_key="~/.ssh/school"
+
+# SSH into the server using the specified private key and user
+ssh -i "$private_key" ubuntu@"$server_ip"

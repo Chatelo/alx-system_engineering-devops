@@ -1,13 +1,27 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# This script installs and configures Nginx web server on Ubunt
+# Update package list and install Nginx with the '-y' flag for automatic "yes" to prompts
+sudo apt-get update
+sudo apt-get install -y nginx
 
-# Install Nginx
-apt-get update
-apt-get -y install nginx
+# Create a default HTML page with "Hello World!"
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
 
-# Configure Nginx
-echo "Hello World!" > /var/www/html/index.html
+# Verify that Nginx is running and listening on port 80
+if ! sudo netstat -tuln | grep -q ':80'; then
+    echo "Nginx is not listening on port 80"
+    exit 1
+fi
 
-# Restart Nginx
-service nginx restart
+# Restart Nginx without using systemctl
+sudo /etc/init.d/nginx restart
+
+# Test Nginx by querying it with curl
+response=$(curl -s http://localhost)
+if [ "$response" != "Hello World!" ]; then
+    echo "Nginx did not return the expected 'Hello World!' response"
+    exit 1
+fi
+
+# Script completed successfully
+echo "Nginx installation and configuration is complete."

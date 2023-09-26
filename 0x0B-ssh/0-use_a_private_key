@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+#
 # Define the server IP address
 server_ip="18.234.145.59"
 

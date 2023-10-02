@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# configure a load-balancing server
+
+# Install HAProxy
+sudo apt-get install -y --no-install-recommends software-properties-common
+sudo apt-get update -y
+sudo apt-get install -y haproxy
+
+# Configure HAProxy
+sudo sed -i 's/^\(ENABLED=\).*/\11/' /etc/default/haproxy
+
+# Create a new HAProxy configuration file
+echo \
+	"
+frontend chatec.tech
+	bind *:80
+	mode http
+	default_backend chatec.tech
+backend chatec.tech
+	mode http
+	balance roundrobin
+	server 247663-web-01 18.234.145.59
+	server 247663-web-02 54.146.58.93" >> /etc/haproxy/haproxy.cfg
+
+# Restart HAProxy service
+sudo service haproxy restart

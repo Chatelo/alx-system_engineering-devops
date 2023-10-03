@@ -1,12 +1,4 @@
-#!/usr/bin/env bash
-
-# This script configures a new Ubuntu machine with Nginx
-# Disable ShellCheck SC2154 warning (unused variable)
-# SC2154: var is referenced but not assigned
-# In this case, the warning is ignored because the variable is used in a different context
-# and is assigned a value by the environment
-# (assuming it was meant to ignore SC2154 based on the provided instructions)
-# shellcheck disable=SC2154
+#!/bin/bash
 
 # Update package list
 sudo apt-get update
@@ -32,8 +24,8 @@ new_string="listen 80 default_server;\\nerror_page 404 \/404.html;\\n\\tlocation
 sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
 
 # Add a custom response header with the server hostname
-new_string2="http {\\n\\tadd_header X-Served-By \"$HOSTNAME\";"
-sudo sed -i "s/http {/$new_string2/" /etc/nginx/nginx.conf
+custom_header="add_header X-Served-By \$hostname;"
+sudo sed -i "/http {/a $custom_header" /etc/nginx/nginx.conf
 
 # Start the Nginx service
-sudo service nginx start
+sudo systemctl start nginx

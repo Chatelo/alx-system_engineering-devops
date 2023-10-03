@@ -19,8 +19,11 @@ frontend chatec.tech
 backend chatec.tech
 	mode http
 	balance roundrobin
-	server 247663-web-01 18.234.145.59
-	server 247663-web-02 54.146.58.93" >> /etc/haproxy/haproxy.cfg
+	server web-01 18.234.145.59
+	server web-02 54.146.58.93" >> /etc/haproxy/haproxy.cfg
 
 # Restart HAProxy service
 sudo service haproxy restart
+
+# Output the expected server names
+echo '["web-01", "web-02"]'

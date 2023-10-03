@@ -2,32 +2,54 @@
 # configure a load-balancing server
 
 # Install HAProxy
-sudo apt-get install -y --no-install-recommends software-properties-common
-sudo apt-get update -y
+sudo apt-get update
 sudo apt-get install -y haproxy
 
 # Configure HAProxy for round-robin load balancing
 sudo sed -i 's/^\(ENABLED=\).*/\11/' /etc/default/haproxy
 
 echo \
-	"
+    "
 frontend chatec.tech
-	bind *:80
-	mode http
-	default_backend chatec.tech
+    bind *:80
+    mode http
+    default_backend chatec.tech
 backend chatec.tech
-	mode http
-	balance roundrobin
-	server web-01 18.234.145.59
-	server web-02 54.146.58.93" >> /etc/haproxy/haproxy.cfg
+    mode http
+    balance roundrobin
+    server web-01 18.234.145.59
+    server web-02 54.146.58.93" >> /etc/haproxy/haproxy.cfg
 
 # Ensure HAProxy can be managed via init script
 sudo systemctl enable haproxy
 sudo systemctl start haproxy
 
-# Update the hosts file with the desired hostnames
-sudo sh -c 'echo "247663-web-01" > /etc/hostname'
-sudo sh -c 'echo "247663-web-02" >> /etc/hostname'
+# Reboot to apply the hostname changes
+sudo service haproxy restart#!/usr/bin/env bash
+# configure a load-balancing server
+
+# Install HAProxy
+sudo apt-get update
+sudo apt-get install -y haproxy
+
+# Configure HAProxy for round-robin load balancing
+sudo sed -i 's/^\(ENABLED=\).*/\11/' /etc/default/haproxy
+
+echo \
+    "
+frontend chatec.tech
+    bind *:80
+    mode http
+    default_backend chatec.tech
+backend chatec.tech
+    mode http
+    balance roundrobin
+    server web-01 18.234.145.59
+    server web-02 54.146.58.93" >> /etc/haproxy/haproxy.cfg
+
+# Ensure HAProxy can be managed via init script
+sudo systemctl enable haproxy
+sudo systemctl start haproxy
 
 # Reboot to apply the hostname changes
-sudo reboot
+sudo service haproxy restart

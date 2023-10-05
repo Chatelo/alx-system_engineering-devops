@@ -2,6 +2,7 @@
 # configure a load-balancing server
 
 # Install HAProxy
+sudo apt-get install -y --no-install-recommends software-properties-common
 sudo apt-get update
 sudo apt-get install -y haproxy
 
@@ -20,9 +21,6 @@ backend chatec.tech
     server web-01 18.234.145.59
     server web-02 54.146.58.93" >> /etc/haproxy/haproxy.cfg
 
-# Ensure HAProxy can be managed via init script
-sudo systemctl enable haproxy
-sudo systemctl start haproxy
 
 # Reboot to apply the hostname changes
 sudo service haproxy restart#!/usr/bin/env bash

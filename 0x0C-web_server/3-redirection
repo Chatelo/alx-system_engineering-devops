@@ -2,31 +2,20 @@
 # Script to install and configure Nginx for redirection
 # Nginx should be listening on port 80 and redirect /redirect_me to another page
 
-# Update the package list to ensure we have the latest package information
+# Update the package repositories
 sudo apt-get update
 
-# Install Nginx using the apt-get command with -y option to automatically confirm installation
+# Install Nginx
 sudo apt-get install -y nginx
 
-# Create a configuration file for the redirection
-echo "server {
-    listen 80;
-    server_name chatec.tech;
+# Create the index.html file with "Hello World!" content
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
+# Define the string for replacement in the Nginx configuration file
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/alxafrica.com permanent;"
 
-}" | sudo tee /etc/nginx/sites-available/redirect_me > /dev/null
+# Replace the specified line in the Nginx configuration file with the new string
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# Create a symbolic link to enable the site
-sudo ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
-
-# Test Nginx configuration for syntax errors
-sudo nginx -t
-
-# Restart Nginx to apply the changes
+# Restart the Nginx service to apply the changes
 sudo service nginx restart
-
-# Exit with a success message
-echo "Nginx redirection configured successfully!"

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script configures a new Ubuntu machine with Nginx
 # Disable ShellCheck SC2154 warning (unused variable)
 # SC2154: var is referenced but not assigned

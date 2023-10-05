@@ -37,19 +37,19 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-frontend realmigo.tech
+frontend chatec.tech
     bind *:80
     mode http
     redirect scheme https code 301 if !{ ssl_fc }
-    default_backend realmigo.tech
+    default_backend chatec.tech
 
-frontend www.realmigo.tech
-    bind *:443 ssl crt /etc/haproxy/ssl/www.realmigo.tech.pem
+frontend www.chatec.tech
+    bind *:443 ssl crt /etc/haproxy/ssl/www.chatec.tech.pem
     mode http
     redirect scheme https code 301 if !{ ssl_fc }
-    default_backend realmigo.tech
+    default_backend chatec.tech
 
-backend realmigo.tech
+backend chatec.tech
     balance roundrobin
     redirect scheme https code 301 if !{ ssl_fc }
     server 197522-web-01 34.204.95.241:80 check

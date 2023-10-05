@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Connects to my ALX School Server
+# Connects to my ALX School load balancer Server
 
-ssh -i ~/.ssh/school ubuntu@18.234.145.59
-
+ssh -i ~/.ssh/school ubuntu@100.26.164.114

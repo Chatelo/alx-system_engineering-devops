@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
-#
-# Define the server IP address
-server_ip="54.146.58.93"
+# Connects to my ALX School load balancer Server
 
-# Define the path to the private key
-private_key="~/.ssh/school"
-
-# SSH into the server using the specified private key and user
-ssh -i "$private_key" ubuntu@"$server_ip"
+ssh -i ~/.ssh/school ubuntu@54.146.58.93
 

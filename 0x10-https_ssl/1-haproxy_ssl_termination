@@ -12,11 +12,14 @@ global
 	ca-base /etc/ssl/certs
 	crt-base /etc/ssl/private
 
-	# generated 2023-10-06, Mozilla Guideline v5.7, HAProxy 2.1, OpenSSL 1.1.1k, intermediate configuration
-	# https://ssl-config.mozilla.org/#server=haproxy&version=2.1&config=intermediate&openssl=1.1.1k&guideline=5.7
-		ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305
+	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+       	ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305
 		ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
 		ssl-default-bind-options prefer-client-ciphers no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
+
+		ssl-default-server-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305
+		ssl-default-server-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+		ssl-default-server-options no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
 
 defaults
 	log	global
@@ -40,12 +43,9 @@ frontend chatec.tech
     default_backend chatec.tech
 
 frontend www.chatec.tech
-    bind *:443 ssl crt /etc/haproxy/ssl/www.chatec.tech alpn h2,http/1.1
+    bind *:443 ssl crt /etc/haproxy/ssl/www.chatec.tech.pem
     mode http
-	bind :80
-	redirect scheme https code 301 if !{ ssl_fc }
     default_backend chatec.tech
-    http-response set-header Strict-Transport-Security max-age=63072000
 
 backend chatec.tech
     balance roundrobin
